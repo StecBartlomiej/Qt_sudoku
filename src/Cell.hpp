@@ -3,6 +3,7 @@
 
 #include <QTableWidgetItem>
 
+
 class Cell: public QTableWidgetItem
 {
 public:
@@ -13,10 +14,11 @@ public:
     void setData(int role, const QVariant &newValue) override;
 
     void write(QDataStream &out) const override;
+    void read(QDataStream &in) override;
 
 private:
     QVariant value_;
-    const bool modifiable_;
+    bool modifiable_;
 };
 
 

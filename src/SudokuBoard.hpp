@@ -11,13 +11,12 @@ class SudokuBoard : public QTableWidget
 public:
     explicit SudokuBoard(QWidget *parent);
 
-    friend QDataStream& operator<<(QDataStream& out, const SudokuBoard &sudoku);
-
-//    void SaveToFile(const QString &name) const;
+    bool WriteTo(QDataStream &out);
+    bool ReadFrom(QDataStream &in);
 
 public slots:
     void ChangeSelectedNumber(int newNumber);
-    void SetCellValue(int w, int h);
+    void SetCellValue(int x, int y);
 
     // TODO - Add Serialization/Deserialization
     // TODO - Draw Sudoku Grid

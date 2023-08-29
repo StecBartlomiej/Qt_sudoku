@@ -43,13 +43,23 @@ QTableWidgetItem *Cell::clone() const
 void Cell::write(QDataStream &out) const
 {
     if (value_.isValid())
-    {
-        bool ok;
-        out << value_.toInt(&ok);
-        assert(ok);
-    }
-    else
-        out << " ";
-    out << ";" << QString::number(modifiable_);
+        out << QString(value_.toString());
+    out << qint32(modifiable_);
 }
 
+void Cell::read(QDataStream &in)
+{
+    QString readValue;
+    qint32 modifiable;
+
+    in >> readValue >> modifiable;
+
+    modifiable_ = bool(modifiable);
+    if (!readValue.isEmpty())
+    {
+        bool ok;
+        int x = readValue.toInt(&ok);
+        if (ok && x >= 1  && x <= 9)
+            value_ = readValue;
+    }
+}

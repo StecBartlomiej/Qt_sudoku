@@ -13,21 +13,31 @@ class MainWindow: public QMainWindow
 public:
     MainWindow();
 
+signals:
+    void UpdateTitle();
+
+public slots:
+    void Save();
+    void SaveAs();
+    void Open();
+
 private:
     void SetupCentralWidget();
-    [[nodiscard]] QHBoxLayout* CreateButtonLayout();
     void SetupActions();
-//    void Save();
-    void SaveAs();
+    void SetupMenuBar();
 
-    // TODO - add save, open actions and menus
+    void SaveToFile(const QString &fileName);
+    void OpenFromFile(const QString &fileName);
+
 private:
     SudokuBoard *sudokuBoard_;
     QButtonGroup *buttonGroup_;
 
-    QAction *save_;
-    QAction *saveAs_;
-    QAction *open_;
+    QString fileName_;
+
+    QAction *save_{};
+    QAction *saveAs_{};
+    QAction *open_{};
 };
 
 
