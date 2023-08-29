@@ -38,6 +38,7 @@ void SudokuBoard::ChangeSelectedNumber(int newNumber)
 void SudokuBoard::SetCellValue(int w, int h)
 {
     auto cell = itemAt(w, h);
+
     if (!cell)
     {
         cell = itemPrototype()->clone();
@@ -54,7 +55,7 @@ QDataStream &operator<<(QDataStream &out, const SudokuBoard &sudoku)
         out << "\n";
         for (int j = 0; j < 9; ++j)
         {
+//            auto cell =
         }
     }
-    return out;
 }

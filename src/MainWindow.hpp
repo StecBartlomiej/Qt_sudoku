@@ -25,9 +25,9 @@ private:
     SudokuBoard *sudokuBoard_;
     QButtonGroup *buttonGroup_;
 
-    QAction *save_{};
-    QAction *saveAs_{};
-    QAction *open_{};
+    QAction *save_;
+    QAction *saveAs_;
+    QAction *open_;
 };
 
 

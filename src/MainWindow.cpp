@@ -20,9 +20,9 @@ void MainWindow::SetupActions()
 {
     connect(buttonGroup_, &QButtonGroup::idToggled, sudokuBoard_, &SudokuBoard::ChangeSelectedNumber);
 
-    saveAs_ = new QAction("&Save");
-    saveAs_->setStatusTip(tr("Saves current game"));
-    connect(saveAs_, &QAction::toggled, this, &MainWindow::SaveAs);
+    save_ = new QAction("&Save");
+    save_->setStatusTip(tr("Saves current game"));
+    connect(save_, &QAction::toggled, this, &MainWindow::SaveAs);
 
 }
 

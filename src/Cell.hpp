@@ -10,7 +10,7 @@ public:
 
     [[nodiscard]] QTableWidgetItem* clone() const override;
     [[nodiscard]] QVariant data(int role) const override;
-    void setData(int role, const QVariant &value) override;
+    void setData(int role, const QVariant &newValue) override;
 
     void write(QDataStream &out) const override;
 

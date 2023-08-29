@@ -1,21 +1,19 @@
 #include "Cell.hpp"
 
-
 Cell::Cell(QVariant value, bool modifiable): value_{std::move(value)}, modifiable_(modifiable)
 {
 }
 
-void Cell::setData(int role, const QVariant &value)
+void Cell::setData(int role, const QVariant &newValue)
 {
     if (role == Qt::EditRole && modifiable_)
     {
-        if (value.typeId() == QMetaType::Int)
+        if (newValue.typeId() == QMetaType::Int)
         {
             bool ok;
-            value_ = value;
-            auto x = value_.toUInt(&ok);
-            if (!ok || x > 9 || x == 0)
-                value_ = {};
+            auto x = newValue.toInt(&ok);
+            if (ok && x <= 9 && x >= 1)
+                value_ = newValue;
         }
     }
 }
