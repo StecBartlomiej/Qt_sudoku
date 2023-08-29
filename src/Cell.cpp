@@ -47,7 +47,7 @@ void Cell::write(QDataStream &out) const
     if (value_.isValid())
     {
         bool ok;
-        out << value_.toUInt(&ok);
+        out << value_.toInt(&ok);
         assert(ok);
     }
     else

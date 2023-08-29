@@ -5,7 +5,6 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QHBoxLayout>
-#include <QMessageBox>
 
 
 MainWindow::MainWindow() : sudokuBoard_{new SudokuBoard(this)}, buttonGroup_{new QButtonGroup(this)}

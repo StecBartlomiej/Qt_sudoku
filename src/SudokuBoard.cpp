@@ -3,7 +3,7 @@
 
 #include <QHeaderView>
 #include <QResizeEvent>
-
+#include <QMessageBox>
 
 SudokuBoard::SudokuBoard(QWidget *parent) : QTableWidget(parent), selectedNumber_{std::nullopt}
 {
