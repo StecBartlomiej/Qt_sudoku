@@ -1,6 +1,7 @@
 #include "Cell.hpp"
 
-Cell::Cell(std::optional<uint8_t> value, bool modifiable): value_{value}, modifiable_(modifiable)
+
+Cell::Cell(QVariant value, bool modifiable): value_{std::move(value)}, modifiable_(modifiable)
 {
 }
 
@@ -8,10 +9,14 @@ void Cell::setData(int role, const QVariant &value)
 {
     if (role == Qt::EditRole && modifiable_)
     {
-        bool ok;
-        value_ = value.toUInt(&ok);
-        if (!ok | value_ > 9 | value_ == 0)
-            value_ = std::nullopt;
+        if (value.typeId() == QMetaType::Int)
+        {
+            bool ok;
+            value_ = value;
+            auto x = value_.toUInt(&ok);
+            if (!ok || x > 9 || x == 0)
+                value_ = {};
+        }
     }
 }
 
@@ -19,8 +24,8 @@ QVariant Cell::data(int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        if (value_.has_value())
-            return value_.value();
+        if (value_.isValid())
+            return value_.toString();
         else
             return {};
     }
@@ -39,8 +44,12 @@ QTableWidgetItem *Cell::clone() const
 
 void Cell::write(QDataStream &out) const
 {
-    if (value_.has_value())
-        out << value_.value();
+    if (value_.isValid())
+    {
+        bool ok;
+        out << value_.toUInt(&ok);
+        assert(ok);
+    }
     else
         out << " ";
     out << ";" << QString::number(modifiable_);

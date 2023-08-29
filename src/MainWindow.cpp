@@ -21,9 +21,9 @@ void MainWindow::SetupActions()
 {
     connect(buttonGroup_, &QButtonGroup::idToggled, sudokuBoard_, &SudokuBoard::ChangeSelectedNumber);
 
-    save_ = new QAction("&Save");
-    save_->setStatusTip(tr("Saves current game"));
-    connect(save_, &QAction::toggled, this, &MainWindow::Save);
+    saveAs_ = new QAction("&Save");
+    saveAs_->setStatusTip(tr("Saves current game"));
+    connect(saveAs_, &QAction::toggled, this, &MainWindow::SaveAs);
 
 }
 
@@ -67,6 +67,6 @@ void MainWindow::SaveAs()
                                                     tr("Sudoku Game (*.sud);;All Files (*)");
     if (fileName.isEmpty())
         return;
-    sudokuBoard_->SaveToFile(fileName);
+//    sudokuBoard_->SaveToFile(fileName);
 }
 

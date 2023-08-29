@@ -17,7 +17,7 @@ private:
     void SetupCentralWidget();
     [[nodiscard]] QHBoxLayout* CreateButtonLayout();
     void SetupActions();
-    void Save();
+//    void Save();
     void SaveAs();
 
     // TODO - add save, open actions and menus
@@ -25,9 +25,9 @@ private:
     SudokuBoard *sudokuBoard_;
     QButtonGroup *buttonGroup_;
 
-    QAction *save_;
-    QAction *saveAs_;
-    QAction *open_;
+    QAction *save_{};
+    QAction *saveAs_{};
+    QAction *open_{};
 };
 
 

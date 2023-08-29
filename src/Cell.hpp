@@ -6,7 +6,7 @@
 class Cell: public QTableWidgetItem
 {
 public:
-    explicit Cell(std::optional<uint8_t> value = std::nullopt, bool modifiable = true);
+    explicit Cell(QVariant value = {}, bool modifiable = true);
 
     [[nodiscard]] QTableWidgetItem* clone() const override;
     [[nodiscard]] QVariant data(int role) const override;
@@ -15,7 +15,7 @@ public:
     void write(QDataStream &out) const override;
 
 private:
-    std::optional<uint8_t> value_;
+    QVariant value_;
     const bool modifiable_;
 };
 

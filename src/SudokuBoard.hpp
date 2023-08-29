@@ -13,7 +13,7 @@ public:
 
     friend QDataStream& operator<<(QDataStream& out, const SudokuBoard &sudoku);
 
-    void SaveToFile(const QString &name) const;
+//    void SaveToFile(const QString &name) const;
 
 public slots:
     void ChangeSelectedNumber(int newNumber);
@@ -23,7 +23,7 @@ public slots:
     // TODO - Draw Sudoku Grid
     // TODO - Add solver
 private:
-    std::optional<uint8_t> selectedNumber_;
+    std::optional<int> selectedNumber_;
 };
 
 
