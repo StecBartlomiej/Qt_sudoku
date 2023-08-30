@@ -26,6 +26,7 @@ set(SOURCE_FILES
         )
 
 set(UI_FILES
+        stylesheet.qss
         )
 
 qt_add_executable(Sudoku ${SOURCE_FILES} ${UI_FILES})

@@ -1,0 +1,24 @@
+
+QPushButton
+{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+    border-color: gray;
+    font: 14px;
+    max-width: 8em;
+    min-width: 10px;
+    padding: 3px;
+}
+
+QPushButton:pressed
+{
+    border-style: inset;
+}
+
+QPushButton::checked
+{
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+}
+
