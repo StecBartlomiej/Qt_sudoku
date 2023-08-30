@@ -8,7 +8,7 @@ void Cell::setData(int role, const QVariant &newValue)
 {
     if (role == Qt::EditRole && modifiable_)
     {
-        if (newValue.typeId() == QMetaType::Int)
+        if (newValue.typeId() == QMetaType::Int || newValue.typeId() == QMetaType::QString)
         {
             bool ok;
             auto x = newValue.toInt(&ok);
@@ -31,6 +31,11 @@ QVariant Cell::data(int role) const
     {
         return Qt::AlignCenter;
     }
+    // TODO
+//    else if (role == Qt::FontRole)
+//    {
+//
+//    }
     else
         return QTableWidgetItem::data(role);
 }

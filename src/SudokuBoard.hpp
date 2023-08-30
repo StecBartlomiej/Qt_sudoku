@@ -13,14 +13,17 @@ public:
 
     bool WriteTo(QDataStream &out);
     bool ReadFrom(QDataStream &in);
+    [[nodiscard]] QString GetStringBoard() const;
 
 public slots:
     void ChangeSelectedNumber(int newNumber);
     void SetCellValue(int x, int y);
 
-    // TODO - Add Serialization/Deserialization
+private:
+    void DrawGridLines();
     // TODO - Draw Sudoku Grid
     // TODO - Add solver
+
 private:
     std::optional<int> selectedNumber_;
 };

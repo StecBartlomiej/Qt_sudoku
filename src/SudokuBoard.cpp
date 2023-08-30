@@ -79,3 +79,30 @@ bool SudokuBoard::ReadFrom(QDataStream &in)
     }
     return true;
 }
+
+QString SudokuBoard::GetStringBoard() const
+{
+    QString result;
+    QTextStream oss;
+    oss.setString(&result);
+
+    for (int i = 0; i < 9; ++i)
+    {
+        for (int j = 0; j < 9; ++j)
+        {
+            auto *cell = item(i, j);
+            if (cell)
+                oss << cell->data(Qt::DisplayRole).toString();
+            else
+                oss << "-";
+            oss << "\t";
+        }
+        oss << "\n";
+    }
+    return result;
+}
+
+void SudokuBoard::DrawGridLines()
+{
+
+}

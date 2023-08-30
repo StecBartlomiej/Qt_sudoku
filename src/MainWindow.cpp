@@ -8,6 +8,7 @@
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QMessageBox>
+#include <QClipboard>
 
 
 MainWindow::MainWindow() : sudokuBoard_{new SudokuBoard(this)}, buttonGroup_{new QButtonGroup(this)}, fileName_{}
@@ -15,9 +16,21 @@ MainWindow::MainWindow() : sudokuBoard_{new SudokuBoard(this)}, buttonGroup_{new
     resize(1200, 800);
     setWindowTitle(fileName_);
 
+    SetupStyleSheet();
     SetupActions();
     SetupCentralWidget();
     SetupMenuBar();
+}
+
+void MainWindow::SetupStyleSheet()
+{
+    QFile file("../stylesheet.qss");
+    if (!file.open(QIODevice::ReadOnly))
+        return ;
+
+    QString styleSheet = file.readAll();
+    qApp->setStyleSheet(styleSheet);
+
 }
 
 void MainWindow::SetupActions()
@@ -49,6 +62,10 @@ void MainWindow::SetupActions()
     open_->setStatusTip(tr("Open sudoku file"));
     connect(open_, &QAction::triggered, this, &MainWindow::Open);
 
+    copy_ = new QAction(tr("Copy"));
+    copy_->setShortcut(QKeySequence::Copy);
+    copy_->setStatusTip(tr("Copy text representation of board clipboard"));
+    connect(copy_, &QAction::triggered, this, &MainWindow::CopyToClipboard);
 }
 
 void MainWindow::SetupCentralWidget()
@@ -78,6 +95,9 @@ void MainWindow::SetupMenuBar()
     fileMenu->addAction(open_);
     fileMenu->addAction(save_);
     fileMenu->addAction(saveAs_);
+
+    auto barMenu = menuBar()->addMenu(tr("&Edit"));
+    barMenu->addAction(copy_);
 }
 
 void MainWindow::SaveAs()
@@ -117,7 +137,7 @@ void MainWindow::SaveToFile(const QString &fileName)
         return;
     }
     QDataStream out(&file);
-    out.setVersion(QDataStream::Version::Qt_6_0);
+    out.setVersion(qtVersion);
 
     bool success = sudokuBoard_->WriteTo(out);
 
@@ -140,7 +160,7 @@ void MainWindow::OpenFromFile(const QString &fileName)
         return;
     }
     QDataStream in(&file);
-    in.setVersion(QDataStream::Version::Qt_6_0);
+    in.setVersion(qtVersion);
 
     bool success = sudokuBoard_->ReadFrom(in);
 
@@ -152,5 +172,10 @@ void MainWindow::OpenFromFile(const QString &fileName)
     }
     else
         QMessageBox::warning(this, tr("Open File"), tr("Failed to open %1 file").arg(fileName_));
+}
+
+void MainWindow::CopyToClipboard()
+{
+    QApplication::clipboard()->setText(sudokuBoard_->GetStringBoard());
 }
 
