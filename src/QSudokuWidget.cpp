@@ -1,4 +1,4 @@
-#include "SudokuBoard.hpp"
+#include "QSudokuWidget.hpp"
 #include "Cell.hpp"
 
 #include <QHeaderView>
@@ -6,7 +6,7 @@
 #include <QMessageBox>
 #include <QFile>
 
-SudokuBoard::SudokuBoard(QWidget *parent) : QTableWidget(parent), selectedNumber_{std::nullopt}
+QSudokuWidget::QSudokuWidget(QWidget *parent) : QTableWidget(parent), selectedNumber_{std::nullopt}
 {
     setItemPrototype(new Cell);
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -28,15 +28,15 @@ SudokuBoard::SudokuBoard(QWidget *parent) : QTableWidget(parent), selectedNumber
     setSortingEnabled(false);
     showGrid();
 
-    connect(this, &QTableWidget::cellClicked, this, &SudokuBoard::SetCellValue);
+    connect(this, &QTableWidget::cellClicked, this, &QSudokuWidget::SetCellValue);
 }
 
-void SudokuBoard::ChangeSelectedNumber(int newNumber)
+void QSudokuWidget::ChangeSelectedNumber(int newNumber)
 {
     selectedNumber_ = newNumber;
 }
 
-void SudokuBoard::SetCellValue(int x, int y)
+void QSudokuWidget::SetCellValue(int x, int y)
 {
     auto *cell = item(x, y);
 
@@ -50,7 +50,7 @@ void SudokuBoard::SetCellValue(int x, int y)
 }
 
 
-bool SudokuBoard::WriteTo(QDataStream &out)
+bool QSudokuWidget::WriteTo(QDataStream &out)
 {
     for (int i = 0; i < 9; ++i)
     {
@@ -67,7 +67,7 @@ bool SudokuBoard::WriteTo(QDataStream &out)
     return true;
 }
 
-bool SudokuBoard::ReadFrom(QDataStream &in)
+bool QSudokuWidget::ReadFrom(QDataStream &in)
 {
     quint16 i, j;
     while (!in.atEnd())
@@ -80,7 +80,7 @@ bool SudokuBoard::ReadFrom(QDataStream &in)
     return true;
 }
 
-QString SudokuBoard::GetStringBoard() const
+QString QSudokuWidget::GetStringBoard() const
 {
     QString result;
     QTextStream oss;
@@ -102,7 +102,7 @@ QString SudokuBoard::GetStringBoard() const
     return result;
 }
 
-void SudokuBoard::DrawGridLines()
+void QSudokuWidget::DrawGridLines()
 {
 
 }

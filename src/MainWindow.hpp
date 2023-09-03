@@ -4,7 +4,7 @@
 #include <QMainWindow>
 
 class QButtonGroup;
-class SudokuBoard;
+class QSudokuWidget;
 class QHBoxLayout;
 
 class MainWindow: public QMainWindow
@@ -23,7 +23,7 @@ public slots:
     void CopyToClipboard();
 
 private:
-    void SetupStyleSheet();
+    static void SetupStyleSheet();
     void SetupCentralWidget();
     void SetupActions();
     void SetupMenuBar();
@@ -35,7 +35,7 @@ public:
     static constexpr int qtVersion = QDataStream::Version::Qt_6_0;
 
 private:
-    SudokuBoard *sudokuBoard_;
+    QSudokuWidget *sudokuBoard_;
     QButtonGroup *buttonGroup_;
 
     QString fileName_;

@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (!MSVC)
-    add_compile_options(-Wall -Wextra -pedantic -Werror)
+    add_compile_options(-Wall -Wextra -pedantic -Werror -O3)
 endif()
 
 
@@ -21,8 +21,9 @@ include_directories(src ${CMAKE_BINARY_DIR})
 set(SOURCE_FILES
         main.cpp
         src/MainWindow.cpp
-        src/SudokuBoard.cpp
+        src/QSudokuWidget.cpp
         src/Cell.cpp
+        src/Sudoku.cpp
         )
 
 set(UI_FILES

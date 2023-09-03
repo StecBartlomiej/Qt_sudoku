@@ -1,15 +1,15 @@
-#ifndef QT_SUDOKU_SUDOKUBOARD_HPP
-#define QT_SUDOKU_SUDOKUBOARD_HPP
+#ifndef QT_SUDOKU_QSUDOKUWIDGET_HPP
+#define QT_SUDOKU_QSUDOKUWIDGET_HPP
 
 #include <QTableWidget>
 
 class Cell;
 
-class SudokuBoard : public QTableWidget
+class QSudokuWidget : public QTableWidget
 {
     Q_OBJECT
 public:
-    explicit SudokuBoard(QWidget *parent);
+    explicit QSudokuWidget(QWidget *parent);
 
     bool WriteTo(QDataStream &out);
     bool ReadFrom(QDataStream &in);
@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif //QT_SUDOKU_SUDOKUBOARD_HPP
+#endif //QT_SUDOKU_QSUDOKUWIDGET_HPP
