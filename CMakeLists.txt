@@ -21,9 +21,10 @@ include_directories(src)
 
 set(SOURCE_FILES
         src/MainWindow.cpp
-        src/QSudokuWidget.cpp
+        src/SudokuWidget.cpp
         src/Cell.cpp
         src/Sudoku.cpp
+        src/SudokuModel.cpp
         )
 
 set(UI_FILES
