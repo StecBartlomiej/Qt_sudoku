@@ -14,6 +14,10 @@ QVariant SudokuModel::data(const QModelIndex &index, int role) const
         if (cellValue.has_value())
             return cellValue.value();
     }
+    else if (role == Qt::TextAlignmentRole)
+    {
+        return Qt::AlignCenter;
+    }
     return {};
 }
 
@@ -25,6 +29,8 @@ bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int r
         {
             bool ok{};
             auto uint_value = value.toUInt(&ok);
+            if (uint_value < 1 || uint_value > 9)
+                return false;
             if (ok)
                 table_[index.column()][index.row()] = uint_value;
             return ok;

@@ -72,7 +72,11 @@ void MainWindow::SetupActions()
 void MainWindow::SetupCentralWidget()
 {
     auto buttonLayout = new QHBoxLayout();
+
+    // QT does not allow for partial selection in buttonGroup
+    // TODO - create custom Button Group class with partial, exclusive selection
     buttonGroup_->setExclusive(true);
+
     for (int i = 1; i <= 9; ++i)
         buttonLayout->addWidget(buttonGroup_->button(i));
 
