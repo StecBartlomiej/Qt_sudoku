@@ -4,6 +4,7 @@
 #include <array>
 #include <bitset>
 #include <ostream>
+#include <optional>
 
 
 class SudokuRules

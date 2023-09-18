@@ -1,15 +1,18 @@
 #include "SudokuModel.hpp"
 
-SudokuModel::SudokuModel(QWidget *parent): QAbstractTableModel(parent), table_{}
+SudokuModel::SudokuModel(QObject *parent): QAbstractTableModel(parent), table_{}
 {
 
 }
 
 QVariant SudokuModel::data(const QModelIndex &index, int role) const
 {
+    if (!index.isValid())
+        return {};
+
     CellValue cellValue = table_[index.column()][index.row()];
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
         if (cellValue.has_value())
             return cellValue.value();
@@ -23,16 +26,17 @@ QVariant SudokuModel::data(const QModelIndex &index, int role) const
 
 bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (role == Qt::EditRole)
+    if (index.isValid() && role == Qt::EditRole)
     {
-        if (value.typeId() == QMetaType::QString || value.typeId() == QMetaType::UInt || value.typeId() == QMetaType::Int)
+        if (value.typeId() == QMetaType::Int || value.typeId() == QMetaType::UInt || value.typeId() == QMetaType::QString)
         {
             bool ok{};
             auto uint_value = value.toUInt(&ok);
-            if (uint_value < 1 || uint_value > 9)
-                return false;
-            if (ok)
+            if (ok && uint_value >= 1 & uint_value <= 9)
+            {
                 table_[index.column()][index.row()] = uint_value;
+                emit dataChanged(index, index, {role});
+            }
             return ok;
         }
     }
@@ -41,6 +45,8 @@ bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int r
 
 Qt::ItemFlags SudokuModel::flags(const QModelIndex &index) const
 {
-    return {QAbstractTableModel::flags(index) | Qt::ItemIsEditable};
+    if (!index.isValid())
+        return Qt::ItemIsEnabled;
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
 }
 

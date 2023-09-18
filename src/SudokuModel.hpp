@@ -10,10 +10,10 @@ class SudokuModel: public QAbstractTableModel
 {
 public:
     // TODO - make custom bounded value
-    using CellValue = std::optional<uint8_t>;
+    using CellValue = std::optional<quint8>;
     using Array2D = std::array<std::array<CellValue, 9>, 9>;
 
-    explicit SudokuModel(QWidget *parent = nullptr);
+    explicit SudokuModel(QObject *parent = nullptr);
 
     [[nodiscard]] int rowCount(const QModelIndex &parent) const override { return 9; }
     [[nodiscard]] int columnCount(const QModelIndex &parent) const override { return 9; }

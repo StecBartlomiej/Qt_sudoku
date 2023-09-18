@@ -1,5 +1,7 @@
-#include <iostream>
 #include "Sudoku.hpp"
+
+#include <iostream>
+#include <cassert>
 
 void SudokuRules::SetValue(int x, int y, int value)
 {
