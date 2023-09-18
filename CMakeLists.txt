@@ -23,7 +23,6 @@ set(SOURCE_FILES
         src/MainWindow.cpp
         src/SudokuView.cpp
         src/Cell.cpp
-        src/Sudoku.cpp
         src/SudokuModel.cpp
         )
 

@@ -1,5 +1,34 @@
 #include "SudokuModel.hpp"
 
+
+void SudokuRules::SetValue(int x, int y, int cellValue)
+{
+    assert(IsAllowed(x, y, cellValue));
+    int groupIdx = GetGroupIdx(x, y);
+
+    rows_[y][cellValue - 1] = true;
+    columns_[x][cellValue - 1] = true;
+    group_[groupIdx][cellValue - 1] = true;
+}
+
+void SudokuRules::RemoveValue(int x, int y, int cellValue)
+{
+    assert(cellValue >= 1 && cellValue <= 9);
+    int groupIdx = GetGroupIdx(x, y);
+
+    rows_[y][cellValue - 1] = false;
+    columns_[x][cellValue - 1] = false;
+    group_[groupIdx][cellValue - 1] = false;
+}
+
+bool SudokuRules::IsAllowed(int x, int y, int cellValue) const
+{
+    assert(cellValue >= 1 && cellValue <= 9);
+    int groupIdx = GetGroupIdx(x, y);
+    return !rows_[y][cellValue - 1] && !columns_[x][cellValue - 1] && !group_[groupIdx][cellValue - 1];
+}
+
+
 SudokuModel::SudokuModel(QObject *parent): QAbstractTableModel(parent), table_{}
 {
 
@@ -32,7 +61,7 @@ bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int r
         {
             bool ok{};
             auto uint_value = value.toUInt(&ok);
-            if (ok && uint_value >= 1 & uint_value <= 9)
+            if (ok && uint_value >= 1 & uint_value <= 9 && rules_.IsAllowed(index.row(), index.column(), uint_value))
             {
                 table_[index.column()][index.row()] = uint_value;
                 emit dataChanged(index, index, {role});
@@ -48,5 +77,64 @@ Qt::ItemFlags SudokuModel::flags(const QModelIndex &index) const
     if (!index.isValid())
         return Qt::ItemIsEnabled;
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+}
+
+bool SudokuModel::Solve()
+{
+    int y, x;
+    CellValue cellValue;
+    quint8 currValue = 0;
+    Array2D originalBoard = table_;
+    bool isGoingBack = false;
+
+    for (int i = 0; i < 9 * 9; ++i)
+    {
+        REVERT_BACK:
+        if (i < 0)
+        {
+            table_ = originalBoard;
+            return false;
+        }
+
+        y = i / 9;
+        x = i % 9;
+
+        // TODO - change to check if modifiable
+        if (originalBoard[y][x].has_value())
+        {
+            if (isGoingBack)
+                --i;
+            else
+                ++i;
+            goto REVERT_BACK;
+        }
+
+        cellValue = table_[y][x];
+        isGoingBack = false;
+
+        currValue = 0;
+        if (cellValue.has_value())
+        {
+            currValue = cellValue.value();
+            rules_.RemoveValue(x, y, currValue);
+            table_[y][x] = std::nullopt;
+        }
+
+        do
+        {
+            currValue += 1;
+            if (currValue > 9)
+            {
+                --i;
+                isGoingBack = true;
+                goto REVERT_BACK;
+            }
+        } while (!rules_.IsAllowed(x, y, currValue));
+
+        table_[y][x] = currValue;
+        rules_.SetValue(x, y, currValue);
+    }
+
+    return true;
 }
 
