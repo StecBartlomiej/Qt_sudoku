@@ -24,6 +24,10 @@ public:
 
     [[nodiscard]] inline bool isModifiable() const { return isModifiable_; }
 
+
+    friend QDataStream& operator<<(QDataStream &out, const Cell &cell);
+    friend QDataStream& operator>>(QDataStream &in, Cell &cell);
+
 private:
     std::optional<quint8> optionalValue_;  // Maybe QVariant ??
     bool isModifiable_;

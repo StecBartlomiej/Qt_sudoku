@@ -152,3 +152,25 @@ inline void Cell::deleteValue()
     optionalValue_ = std::nullopt;
 }
 
+QDataStream &operator<<(QDataStream &out, const Cell &cell)
+{
+    if (cell.has_value())
+        out << quint16(cell.value());
+    else
+        out << quint16(UINT16_MAX);
+    out << cell.isModifiable_;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, Cell &cell)
+{
+    quint16 value;
+    in >> value;
+    if (value == quint16(UINT16_MAX))
+        cell.deleteValue();
+    else
+        cell.setValue(static_cast<quint8>(value));
+    in >> cell.isModifiable_;
+    return in;
+}
+
