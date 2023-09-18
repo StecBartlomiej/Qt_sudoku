@@ -26,9 +26,7 @@ bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int r
             bool ok{};
             auto uint_value = value.toUInt(&ok);
             if (ok)
-            {
                 table_[index.column()][index.row()] = uint_value;
-            }
             return ok;
         }
     }

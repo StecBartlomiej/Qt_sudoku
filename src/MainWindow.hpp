@@ -4,7 +4,7 @@
 #include <QMainWindow>
 
 class QButtonGroup;
-class SudokuWidget;
+class SudokuView;
 class QHBoxLayout;
 
 class MainWindow: public QMainWindow
@@ -35,7 +35,7 @@ public:
     static constexpr int qtVersion = QDataStream::Version::Qt_6_0;
 
 private:
-    SudokuWidget *sudokuBoard_;
+    SudokuView *sudokuBoard_;
     QButtonGroup *buttonGroup_;
 
     QString fileName_;

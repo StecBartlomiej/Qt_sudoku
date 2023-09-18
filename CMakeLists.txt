@@ -21,7 +21,7 @@ include_directories(src)
 
 set(SOURCE_FILES
         src/MainWindow.cpp
-        src/SudokuWidget.cpp
+        src/SudokuView.cpp
         src/Cell.cpp
         src/Sudoku.cpp
         src/SudokuModel.cpp

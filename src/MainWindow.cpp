@@ -1,5 +1,5 @@
 #include "MainWindow.hpp"
-#include "SudokuWidget.hpp"
+#include "SudokuView.hpp"
 
 #include <QApplication>
 #include <QFileDialog>
@@ -12,7 +12,7 @@
 #include <QClipboard>
 
 
-MainWindow::MainWindow() : sudokuBoard_{new SudokuWidget(this)}, buttonGroup_{new QButtonGroup(this)}, fileName_{}
+MainWindow::MainWindow() : sudokuBoard_{new SudokuView(this)}, buttonGroup_{new QButtonGroup(this)}, fileName_{}
 {
     resize(1000, 800);
     setWindowTitle(fileName_);
@@ -44,7 +44,7 @@ void MainWindow::SetupActions()
 
         buttonGroup_->addButton(button, i);
     }
-    connect(buttonGroup_, &QButtonGroup::idToggled, sudokuBoard_, &SudokuWidget::ChangeSelectedNumber);
+    connect(buttonGroup_, &QButtonGroup::idToggled, sudokuBoard_, &SudokuView::ChangeSelectedNumber);
 
     connect(this, &MainWindow::UpdateTitle, [=](){ setWindowTitle(fileName_); });
 
