@@ -1,5 +1,6 @@
 
 set(TEST_FILES
+        tests/test_SudokuModel.cpp
         )
 
 

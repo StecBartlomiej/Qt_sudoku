@@ -1,5 +1,7 @@
 #include "SudokuModel.hpp"
 
+#include <cassert>
+
 
 void SudokuRules::SetValue(int x, int y, int cellValue)
 {
@@ -39,7 +41,7 @@ QVariant SudokuModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return {};
 
-    CellValue cellValue = table_[index.column()][index.row()];
+    Cell cellValue = table_[index.column()][index.row()];
 
     if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
@@ -61,9 +63,9 @@ bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int r
         {
             bool ok{};
             auto uint_value = value.toUInt(&ok);
-            if (ok && uint_value >= 1 & uint_value <= 9 && rules_.IsAllowed(index.row(), index.column(), uint_value))
+            if (ok && uint_value >= 1 & uint_value <= 9 && rules_.IsAllowed(index.row(), index.column(), static_cast<int>(uint_value)))
             {
-                table_[index.column()][index.row()] = uint_value;
+                table_[index.column()][index.row()] = Cell(uint_value);
                 emit dataChanged(index, index, {role});
             }
             return ok;
@@ -82,7 +84,7 @@ Qt::ItemFlags SudokuModel::flags(const QModelIndex &index) const
 bool SudokuModel::Solve()
 {
     int y, x;
-    CellValue cellValue;
+    Cell cellValue;
     quint8 currValue = 0;
     Array2D originalBoard = table_;
     bool isGoingBack = false;
@@ -99,8 +101,8 @@ bool SudokuModel::Solve()
         y = i / 9;
         x = i % 9;
 
-        // TODO - change to check if modifiable
-        if (originalBoard[y][x].has_value())
+        // TODO - delete .has_value() -> make a option to create sudoku from GUI
+        if (originalBoard[y][x].has_value() && originalBoard[y][x].isModifiable())
         {
             if (isGoingBack)
                 --i;
@@ -117,7 +119,7 @@ bool SudokuModel::Solve()
         {
             currValue = cellValue.value();
             rules_.RemoveValue(x, y, currValue);
-            table_[y][x] = std::nullopt;
+            table_[y][x].deleteValue();
         }
 
         do
@@ -131,10 +133,22 @@ bool SudokuModel::Solve()
             }
         } while (!rules_.IsAllowed(x, y, currValue));
 
-        table_[y][x] = currValue;
+        table_[y][x].setValue(currValue);
         rules_.SetValue(x, y, currValue);
     }
 
     return true;
+}
+
+inline void Cell::setValue(quint8 value)
+{
+    assert(isModifiable_);
+    optionalValue_ = value;
+}
+
+inline void Cell::deleteValue()
+{
+    assert(isModifiable_);
+    optionalValue_ = std::nullopt;
 }
 

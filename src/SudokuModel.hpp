@@ -6,6 +6,30 @@
 #include <array>
 #include <bitset>
 
+
+class Cell
+{
+public:
+    Cell() = default;
+    explicit Cell(std::optional<quint8> value, bool isModifiable = false): optionalValue_{value}, isModifiable_{isModifiable} {}
+    Cell(const Cell &other) = default;
+    Cell(Cell &&other) noexcept = default;
+    Cell& operator=(const Cell &other) = default;
+
+    [[nodiscard]] inline bool has_value() const { return optionalValue_.has_value(); }
+
+    [[nodiscard]] inline quint8 value() const { return optionalValue_.value(); }
+    void setValue(quint8 value);
+    void deleteValue();
+
+    [[nodiscard]] inline bool isModifiable() const { return isModifiable_; }
+
+private:
+    std::optional<quint8> optionalValue_;  // Maybe QVariant ??
+    bool isModifiable_;
+};
+
+
 class SudokuRules
 {
 public:
@@ -25,12 +49,11 @@ private:
     GroupDigits group_;
 };
 
+
 class SudokuModel: public QAbstractTableModel
 {
 public:
-    // TODO - make custom bounded value
-    using CellValue = std::optional<quint8>;
-    using Array2D = std::array<std::array<CellValue, 9>, 9>;
+    using Array2D = std::array<std::array<Cell, 9>, 9>;
 
     explicit SudokuModel(QObject *parent = nullptr);
 
