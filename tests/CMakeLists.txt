@@ -13,11 +13,11 @@ include_directories(${Qt_sudoku_SOURCE_DIR}/src)
 
 set(TEST_FILES
         sample_test.cpp
-        )
+)
 
 
 add_executable(Tests ${TEST_FILES})
 target_link_libraries(Tests PUBLIC SudokuLib GTest::gtest_main)
 
 include(GoogleTest)
-add_test(Sudoku Tests)
+gtest_discover_tests(Tests)
