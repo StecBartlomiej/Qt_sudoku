@@ -7,7 +7,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-enable_testing()
+
+include(FetchContent)
+
 
 if (!MSVC)
     add_compile_options(-Wall -Wextra -pedantic -Werror -O3)
@@ -47,5 +49,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Relase")
             )
 endif()
 
+enable_testing()
 include(tests/CMakeLists.txt)
 
