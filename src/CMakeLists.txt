@@ -1,11 +1,9 @@
-
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui)
 qt_standard_project_setup()
 
-include_directories(src)
 
 set(SOURCE_FILES
         MainWindow.cpp
@@ -19,6 +17,7 @@ set(UI_FILES
 
 
 qt_add_library(SudokuLib ${SOURCE_FILES})
+target_include_directories(SudokuLib PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(SudokuLib PUBLIC Qt6::Core Qt6::Widgets Qt6::Gui)
 
 target_precompile_headers(SudokuLib

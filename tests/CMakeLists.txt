@@ -8,11 +8,8 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-
-include_directories(${Qt_sudoku_SOURCE_DIR}/src)
-
 set(TEST_FILES
-        sample_test.cpp
+        SudokuModelCell.cpp
 )
 
 

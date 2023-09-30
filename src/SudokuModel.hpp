@@ -74,4 +74,17 @@ private:
 };
 
 
+
+inline void Cell::setValue(quint8 value)
+{
+    assert(isModifiable_);
+    optionalValue_ = value;
+}
+
+inline void Cell::deleteValue()
+{
+    assert(isModifiable_);
+    optionalValue_ = std::nullopt;
+}
+
 #endif //QT_SUDOKU_SUDOKUMODEL_HPP
