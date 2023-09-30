@@ -45,8 +45,8 @@ QVariant SudokuModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
-        if (cellValue.has_value())
-            return cellValue.value();
+        if (cellValue.hasValue())
+            return cellValue.Value();
     }
     else if (role == Qt::TextAlignmentRole)
     {
@@ -102,7 +102,7 @@ bool SudokuModel::Solve()
         x = i % 9;
 
         // TODO - delete .has_value() -> make a option to create sudoku from GUI
-        if (originalBoard[y][x].has_value() && originalBoard[y][x].isModifiable())
+        if (originalBoard[y][x].hasValue() && originalBoard[y][x].isModifiable())
         {
             if (isGoingBack)
                 --i;
@@ -115,9 +115,9 @@ bool SudokuModel::Solve()
         isGoingBack = false;
 
         currValue = 0;
-        if (cellValue.has_value())
+        if (cellValue.hasValue())
         {
-            currValue = cellValue.value();
+            currValue = cellValue.Value();
             rules_.RemoveValue(x, y, currValue);
             table_[y][x].deleteValue();
         }

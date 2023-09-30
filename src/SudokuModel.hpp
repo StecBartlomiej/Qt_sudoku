@@ -11,21 +11,21 @@ class Cell
 {
 public:
     Cell() = default;
-    explicit Cell(std::optional<quint8> value, bool isModifiable = false): optionalValue_{value}, isModifiable_{isModifiable} {}
+    explicit Cell(quint8 value, bool isModifiable = false): optionalValue_{value}, isModifiable_{isModifiable} {}
     Cell(const Cell &other) = default;
     Cell(Cell &&other) noexcept = default;
     Cell& operator=(const Cell &other) = default;
 
-    [[nodiscard]] inline bool has_value() const { return optionalValue_.has_value(); }
+    [[nodiscard]] bool hasValue() const { return optionalValue_.has_value(); }
 
-    [[nodiscard]] inline quint8 value() const { return optionalValue_.value(); }
+    [[nodiscard]] quint8 Value() const { return optionalValue_.value(); }
     void setValue(quint8 value);
     void deleteValue();
 
-    [[nodiscard]] inline bool isModifiable() const { return isModifiable_; }
+    [[nodiscard]] bool isModifiable() const { return isModifiable_; }
 
 private:
-    std::optional<quint8> optionalValue_;  // Maybe QVariant ??
+    std::optional<quint8> optionalValue_;
     bool isModifiable_;
 };
 
@@ -36,7 +36,7 @@ public:
     using Digits = std::bitset<9>;
     using GroupDigits = std::array<Digits, 9>;
 
-    [[nodiscard]] inline static int GetGroupIdx(int x, int y) { return (y / 3) * 3 + (x / 3); }
+    [[nodiscard]] static int GetGroupIdx(int x, int y) { return (y / 3) * 3 + (x / 3); }
 
     void SetValue(int x, int y, int cellValue);
     void RemoveValue(int x, int y, int cellValue);
