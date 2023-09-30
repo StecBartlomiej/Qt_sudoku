@@ -1,3 +1,4 @@
+
 FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
@@ -7,13 +8,16 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+
+include_directories(${Qt_sudoku_SOURCE_DIR}/src)
+
 set(TEST_FILES
-        tests/sample_test.cpp
+        sample_test.cpp
         )
 
 
-qt_add_executable(Tests ${TEST_FILES} ${SOURCE_FILES})
-target_link_libraries(Tests PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui GTest::gtest_main)
+add_executable(Tests ${TEST_FILES})
+target_link_libraries(Tests PUBLIC SudokuLib GTest::gtest_main)
 
 include(GoogleTest)
 add_test(Sudoku Tests)
