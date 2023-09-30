@@ -63,7 +63,7 @@ bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int r
         {
             bool ok{};
             auto uint_value = value.toUInt(&ok);
-            if (ok && uint_value >= 1 & uint_value <= 9 && rules_.IsAllowed(index.row(), index.column(), static_cast<int>(uint_value)))
+            if (ok && uint_value >= 1 && uint_value <= 9 && rules_.IsAllowed(index.row(), index.column(), static_cast<int>(uint_value)))
             {
                 table_[index.column()][index.row()] = Cell(uint_value);
                 emit dataChanged(index, index, {role});

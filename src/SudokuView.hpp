@@ -1,7 +1,7 @@
 #ifndef QT_SUDOKU_SUDOKUVIEW_HPP
 #define QT_SUDOKU_SUDOKUVIEW_HPP
 
-#include <QTableWidget>
+#include <QTableView>
 
 class SudokuModel;
 
@@ -22,8 +22,8 @@ private:
     void DrawGridLines();
 
 private:
-    QVariant selectedNumber_;
     SudokuModel *sudokuModel_;
+    QVariant selectedNumber_;
 };
 
 
