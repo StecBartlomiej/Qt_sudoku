@@ -15,8 +15,8 @@ set(UI_FILES
         stylesheet.qss
 )
 
-
-qt_add_library(SudokuLib ${SOURCE_FILES})
+# Using qt_add_library is causing issue with GTest linking !
+add_library(SudokuLib ${SOURCE_FILES})
 target_include_directories(SudokuLib PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(SudokuLib PUBLIC Qt6::Core Qt6::Widgets Qt6::Gui)
 
