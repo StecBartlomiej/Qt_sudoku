@@ -11,6 +11,7 @@ FetchContent_MakeAvailable(googletest)
 set(TEST_FILES
         SudokuModelCell.cpp
         SudokuModelRules.cpp
+        SudokuModel.cpp
 )
 
 
