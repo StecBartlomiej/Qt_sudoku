@@ -3,7 +3,7 @@
 #include <QMessageBox>
 
 
-SudokuModel::SudokuModel(SudokuSolver solver, QObject *parent): QAbstractTableModel(parent), board_{}, solver_{std::move(solver)}
+SudokuModel::SudokuModel(QObject *parent, SudokuSolver solver): QAbstractTableModel(parent), board_{}, solver_{std::move(solver)}
 {
 
 }

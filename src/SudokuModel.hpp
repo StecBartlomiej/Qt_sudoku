@@ -2,6 +2,7 @@
 #define SUDOKU_MODEL_HPP
 
 #include "SudokuBoard.hpp"
+#include "SudokuSolver.hpp"
 
 #include <QAbstractTableModel>
 #include <bitset>
@@ -15,7 +16,7 @@ using SudokuSolver = std::function<bool(SudokuBoard&)>;
 class SudokuModel : public QAbstractTableModel
 {
 public:
-    explicit SudokuModel(SudokuSolver solver, QObject *parent = nullptr);
+    explicit SudokuModel(QObject *parent = nullptr, SudokuSolver solver = NaiveSudokuSolver);
 
     [[nodiscard]] int rowCount(const QModelIndex &) const override { return 9; }
     [[nodiscard]] int columnCount(const QModelIndex &) const override { return 9; }
