@@ -9,6 +9,8 @@ set(SOURCE_FILES
         MainWindow.cpp
         SudokuView.cpp
         SudokuModel.cpp
+        SudokuSolver.cpp
+        SudokuBoard.cpp
 )
 
 set(UI_FILES
