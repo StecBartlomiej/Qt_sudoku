@@ -5,7 +5,7 @@
 
 TEST(SudokuModelTest, RowCountAndCollumnCount)
 {
-    SudokuModel model{};
+    SudokuModel model{nullptr};
 
     // Invalid idx - RowCount and ColumnCount are independent of idx
     QModelIndex idx{};
@@ -16,7 +16,7 @@ TEST(SudokuModelTest, RowCountAndCollumnCount)
 
 TEST(SudokuModelTest, SetData)
 {
-    SudokuModel model{};
+    SudokuModel model{nullptr};
 
     auto idx = model.index(2, 2);
 
@@ -35,7 +35,7 @@ TEST(SudokuModelTest, SetData)
 
 TEST(SudokuModelTest, Data)
 {
-    SudokuModel model{};
+    SudokuModel model{nullptr};
 
     auto idx = model.index(2, 2);
 

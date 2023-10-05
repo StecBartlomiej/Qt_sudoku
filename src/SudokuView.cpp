@@ -1,5 +1,6 @@
 #include "SudokuView.hpp"
 #include "SudokuModel.hpp"
+#include "SudokuSolver.hpp"
 
 #include <QHeaderView>
 #include <QResizeEvent>
@@ -7,7 +8,7 @@
 #include <QFile>
 
 
-SudokuView::SudokuView(QWidget *parent) : QTableView(parent), sudokuModel_{new SudokuModel(parent)}, selectedNumber_{}
+SudokuView::SudokuView(QWidget *parent) : QTableView(parent), sudokuModel_{new SudokuModel(NaiveSudokuSolver, parent)}, selectedNumber_{}
 {
     QTableView::setModel(sudokuModel_);
     setSelectionMode(QAbstractItemView::SingleSelection);
