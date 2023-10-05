@@ -38,7 +38,10 @@ bool SudokuModel::setData(const QModelIndex &index, const QVariant &value, int r
             if (ok && uint_value >= 1 && uint_value <= 9)
             {
                 if (board_.IsAllowed(index.row(), index.column(), uint_value))
+                {
                     board_.SetValue(index.row(), index.column(), uint_value);
+                    emit dataChanged(index, index, {role});
+                }
             }
             return ok;
         }
