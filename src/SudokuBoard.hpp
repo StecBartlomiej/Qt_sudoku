@@ -59,7 +59,8 @@ public:
     [[nodiscard]] bool IsAllowed(int x, int y, Cell::ValueT value) const;
     void RemoveValue(int x, int y);
 
-    const Array& operator[](std::size_t i) const { return table_[i]; };
+    [[nodiscard]] Cell& Cell(int x, int y) { return table_[y][x]; }
+    [[nodiscard]] class Cell Cell(int x, int y) const { return table_[y][x]; }
 
 private:
     Array2D table_;

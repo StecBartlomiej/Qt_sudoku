@@ -13,7 +13,7 @@ QVariant SudokuModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return {};
 
-    Cell cellValue = board_[index.column()][index.row()];
+    Cell cellValue = board_.Cell(index.row(), index.column());
 
     if (role == Qt::DisplayRole || role == Qt::EditRole)
     {

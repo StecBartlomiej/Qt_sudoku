@@ -24,7 +24,7 @@ bool NaiveSudokuSolver(SudokuBoard &board)
         x = i % 9;
 
         // TODO - delete .has_value() -> make a option to create cells that has values and are modifiabe from GUI
-        if (originalBoard[y][x].HasValue() && originalBoard[y][x].IsModifiable())
+        if (originalBoard.Cell(x, y).HasValue() && originalBoard.Cell(x, y).IsModifiable())
         {
             if (isGoingBack)
                 --i;
@@ -33,7 +33,7 @@ bool NaiveSudokuSolver(SudokuBoard &board)
             goto REVERT_BACK;
         }
 
-        cellValue = board[y][x];
+        cellValue = board.Cell(x, y);
         isGoingBack = false;
 
         currValue = 0;

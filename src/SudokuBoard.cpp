@@ -45,18 +45,20 @@ void SudokuBoard::SetValue(int x, int y, Cell::ValueT value)
 {
     assert(value >= 1 && value <= 9);
     rules_.SetValue(x, y, value);
-    table_[y][x].SetValue(value);
+    Cell(x, y).SetValue(value);
 }
 
 bool SudokuBoard::IsAllowed(int x, int y, Cell::ValueT value) const
 {
-    return table_[y][x].IsModifiable() && rules_.IsAllowed(x, y, value);
+    return Cell(x, y).IsModifiable() && rules_.IsAllowed(x, y, value);
 }
 
 void SudokuBoard::RemoveValue(int x, int y)
 {
-    auto cell = table_[y][x];
+    auto cell = Cell(x, y);
     if (cell.HasValue())
+    {
         rules_.RemoveValue(x, y, cell.Value());
-    cell.RemoveValue();
+        Cell(x, y).RemoveValue();
+    }
 }
