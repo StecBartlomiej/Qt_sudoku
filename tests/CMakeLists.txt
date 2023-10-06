@@ -12,6 +12,7 @@ set(TEST_FILES
         SudokuModelCell.cpp
         SudokuModelRules.cpp
         SudokuModel.cpp
+        SudokuBoard.cpp
 )
 
 
