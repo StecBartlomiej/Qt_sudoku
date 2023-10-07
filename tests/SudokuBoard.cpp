@@ -45,3 +45,33 @@ TEST(SudokuBoardTest, RemoveValue)
     board.SetValue(2, 1, 8);
     EXPECT_EQ(board.Cell(2, 1).Value(), 8);
 }
+
+TEST(SudokuBoardTest, CreateSudokuBoard)
+{
+    // Value that are out of <1, 9> range are set to empty cells in SudokuBoard
+    std::array<std::array<uint8_t, 9>, 9> array = {{{7, 0, 0,  0, 0, 0,  0, 8, 3},
+                                                    {0, 0, 0,  0, 7, 5,  0, 0, 2},
+                                                    {0, 0, 0,  0, 3, 0,  0, 6, 0},
+
+                                                    {8, 0, 0,  0, 6, 0,  5, 4, 0},
+                                                    {0, 0, 0,  2, 0, 4,  0, 0, 0},
+                                                    {0, 4, 3,  0, 1, 0,  0, 0, 7},
+
+                                                    {0, 1, 0,  0, 2, 0,  0, 0, 0},
+                                                    {2, 0, 0,  9, 8, 0,  0, 0, 0},
+                                                    {9, 7, 0,  0, 0, 0,  0, 0, 4}
+                                                   } };
+
+    auto sudokuBoard = CreateSudokuBoard(array);
+
+    for (int y = 0; y < 9; ++y)
+    {
+        for (int x = 0; x < 9; ++x)
+        {
+            if (array[y][x] == 0)
+                EXPECT_FALSE(sudokuBoard.Cell(x, y).HasValue());
+            else
+                EXPECT_EQ(sudokuBoard.Cell(x, y).Value(), array[y][x]);
+        }
+    }
+}

@@ -5,6 +5,7 @@
 #include <array>
 #include <optional>
 #include <bitset>
+#include <type_traits>
 
 
 class Cell
@@ -66,6 +67,29 @@ private:
     Array2D table_;
     SudokuRules rules_;
 };
+
+
+template <typename T, typename = std::enable_if_t<std::is_unsigned_v<T>>>
+[[nodiscard]] SudokuBoard CreateSudokuBoard(const std::array<std::array<T, 9>, 9> &array)
+{
+    SudokuBoard board{};
+    for (int y = 0; y < 9; ++y)
+    {
+        for (int x = 0; x < 9; ++x)
+        {
+            auto value = array[y][x];
+
+            if (value > 9 || value < 1)
+                continue;
+
+            if (!board.IsAllowed(x, y, value))
+                throw std::invalid_argument("Array cannot be converted to SudokuBoard");
+
+            board.SetValue(x, y, static_cast<Cell::ValueT>(value));
+        }
+    }
+    return board;
+}
 
 
 #endif //QT_SUDOKU_SUDOKUBOARD_HPP
