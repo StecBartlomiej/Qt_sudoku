@@ -18,6 +18,8 @@ public:
 public slots:
     void ChangeSelectedNumber(int newNumber);
 
+    void SolveSudoku();
+
 private:
     void DrawGridLines();
 

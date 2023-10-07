@@ -89,3 +89,18 @@ void SudokuView::DrawGridLines()
 {
 
 }
+
+void SudokuView::SolveSudoku()
+{
+    auto result = sudokuModel_->Solve();
+
+    auto topLeft = sudokuModel_->index(0, 0);
+    auto bottomRight = sudokuModel_->index(8, 8);
+
+    emit dataChanged(topLeft, bottomRight);
+
+    if (!result)
+    {
+        QMessageBox::warning(this, tr("Solve"), tr("Unable to solve"));
+    }
+}

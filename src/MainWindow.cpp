@@ -12,7 +12,7 @@
 #include <QClipboard>
 
 
-MainWindow::MainWindow() : sudokuBoard_{new SudokuView(this)}, buttonGroup_{new QButtonGroup(this)}, fileName_{}
+MainWindow::MainWindow() : sudokuView_{new SudokuView(this)}, buttonGroup_{new QButtonGroup(this)}, fileName_{}
 {
     resize(1000, 800);
     setWindowTitle(fileName_);
@@ -44,7 +44,7 @@ void MainWindow::SetupActions()
 
         buttonGroup_->addButton(button, i);
     }
-    connect(buttonGroup_, &QButtonGroup::idToggled, sudokuBoard_, &SudokuView::ChangeSelectedNumber);
+    connect(buttonGroup_, &QButtonGroup::idToggled, sudokuView_, &SudokuView::ChangeSelectedNumber);
 
     connect(this, &MainWindow::UpdateTitle, [=](){ setWindowTitle(fileName_); });
 
@@ -67,6 +67,15 @@ void MainWindow::SetupActions()
     copy_->setShortcut(QKeySequence::Copy);
     copy_->setStatusTip(tr("Copy text representation of board clipboard"));
     connect(copy_, &QAction::triggered, this, &MainWindow::CopyToClipboard);
+
+    solveSudoku_ = new QAction(tr("Solve"));
+    solveSudoku_->setStatusTip(tr("Solves sudoku"));
+    connect(solveSudoku_, &QAction::triggered, sudokuView_, &SudokuView::SolveSudoku);
+
+    clearSudoku_ = new QAction(tr("Clear"));
+    clearSudoku_->setStatusTip(tr("Clears sudoku"));
+    // TODO
+//    connect(clearSudoku_, &QAction::triggered, this, &MainWindow::ClearSudoku);
 }
 
 void MainWindow::SetupCentralWidget()
@@ -84,7 +93,7 @@ void MainWindow::SetupCentralWidget()
     auto mainLayout = new QVBoxLayout();
     mainLayout->setContentsMargins(20, 20, 20, 20);
 
-    mainLayout->addWidget(sudokuBoard_);
+    mainLayout->addWidget(sudokuView_);
     mainLayout->addLayout(buttonLayout);
 
     auto mainWidget = new QWidget(this);
@@ -103,6 +112,9 @@ void MainWindow::SetupMenuBar()
 
     auto barMenu = menuBar()->addMenu(tr("&Edit"));
     barMenu->addAction(copy_);
+
+    menuBar()->addAction(solveSudoku_);
+    menuBar()->addAction(clearSudoku_);
 }
 
 void MainWindow::SaveAs()
@@ -144,7 +156,7 @@ void MainWindow::SaveToFile(const QString &fileName)
     QDataStream out(&file);
     out.setVersion(qtVersion);
 
-    bool success = sudokuBoard_->WriteTo(out);
+    bool success = sudokuView_->WriteTo(out);
 
     if (success)
     {
@@ -167,7 +179,7 @@ void MainWindow::OpenFromFile(const QString &fileName)
     QDataStream in(&file);
     in.setVersion(qtVersion);
 
-    bool success = sudokuBoard_->ReadFrom(in);
+    bool success = sudokuView_->ReadFrom(in);
 
     if (success)
     {
@@ -181,6 +193,6 @@ void MainWindow::OpenFromFile(const QString &fileName)
 
 void MainWindow::CopyToClipboard()
 {
-    QApplication::clipboard()->setText(sudokuBoard_->GetStringBoard());
+    QApplication::clipboard()->setText(sudokuView_->GetStringBoard());
 }
 

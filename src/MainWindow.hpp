@@ -13,6 +13,9 @@ class MainWindow: public QMainWindow
 public:
     MainWindow();
 
+    void SaveToFile(const QString &fileName);
+    void OpenFromFile(const QString &fileName);
+
 signals:
     void UpdateTitle();
 
@@ -21,6 +24,7 @@ public slots:
     void SaveAs();
     void Open();
     void CopyToClipboard();
+    void ClearSudoku();
 
 private:
     static void SetupStyleSheet();
@@ -28,14 +32,11 @@ private:
     void SetupActions();
     void SetupMenuBar();
 
-    void SaveToFile(const QString &fileName);
-    void OpenFromFile(const QString &fileName);
-
 public:
     static constexpr int qtVersion = QDataStream::Version::Qt_6_0;
 
 private:
-    SudokuView *sudokuBoard_;
+    SudokuView *sudokuView_;
     QButtonGroup *buttonGroup_;
 
     QString fileName_;
@@ -44,6 +45,9 @@ private:
     QAction *saveAs_{};
     QAction *open_{};
     QAction *copy_{};
+
+    QAction *solveSudoku_{};
+    QAction *clearSudoku_{};
 };
 
 
