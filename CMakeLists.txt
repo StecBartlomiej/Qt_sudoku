@@ -11,7 +11,7 @@ include(FetchContent)
 if (MSVC)
     add_compile_options(/W4)
 else()
-    add_compile_options(-Wall -Wextra -pedantic -Werror -O3)
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
 
