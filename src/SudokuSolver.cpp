@@ -11,9 +11,11 @@ bool NaiveSudokuSolver(SudokuBoard &board)
     SudokuBoard originalBoard = board;
     bool isGoingBack = false;
 
-    for (int i = 0; i < 9 * 9; ++i)
+    /// Because if last cell is non modifiable then ++i and i will be >= 9 * 9
+    int i = 0;
+    REVERT_BACK:
+    for (; i < 9 * 9; ++i)
     {
-        REVERT_BACK:
         if (i < 0)
         {
             board = originalBoard;
@@ -23,8 +25,8 @@ bool NaiveSudokuSolver(SudokuBoard &board)
         y = i / 9;
         x = i % 9;
 
-        // TODO - delete .has_value() -> make a option to create cells that has values and are modifiabe from GUI
-        if (originalBoard.Cell(x, y).HasValue() && originalBoard.Cell(x, y).IsModifiable())
+        // TODO - delete .has_value() -> make a option to create cells that has values and are modifiable from GUI
+        if (originalBoard.Cell(x, y).HasValue() || !originalBoard.Cell(x, y).IsModifiable())
         {
             if (isGoingBack)
                 --i;
