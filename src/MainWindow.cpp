@@ -76,8 +76,7 @@ void MainWindow::SetupActions()
 
     clearSudoku_ = new QAction(tr("Clear"));
     clearSudoku_->setStatusTip(tr("Clears sudoku"));
-    // TODO
-//    connect(clearSudoku_, &QAction::triggered, this, &MainWindow::ClearSudoku);
+    connect(clearSudoku_, &QAction::triggered, sudokuView_, &SudokuView::ClearSudoku);
 }
 
 void MainWindow::SetupCentralWidget()

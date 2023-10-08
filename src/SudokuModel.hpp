@@ -28,6 +28,9 @@ public:
 
     [[nodiscard]] bool Solve();
 
+public slots:
+    void Reset();
+
 private:
     SudokuBoard board_;
     SudokuSolver solver_;

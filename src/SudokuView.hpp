@@ -19,6 +19,7 @@ public slots:
     void ChangeSelectedNumber(int newNumber);
 
     void SolveSudoku();
+    void ClearSudoku();
 
 private:
     void paintEvent(QPaintEvent *event) override;

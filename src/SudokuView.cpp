@@ -124,3 +124,8 @@ void SudokuView::paintEvent(QPaintEvent *event)
     painter.drawLine(lineHorizontal1);
     painter.drawLine(lineHorizontal2);
 }
+
+void SudokuView::ClearSudoku()
+{
+    emit sudokuModel_->Reset();
+}
