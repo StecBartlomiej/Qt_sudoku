@@ -49,18 +49,18 @@ TEST(SudokuBoardTest, RemoveValue)
 TEST(SudokuBoardTest, CreateSudokuBoard)
 {
     // Value that are out of <1, 9> range are set to empty cells in SudokuBoard
-    std::array<std::array<uint8_t, 9>, 9> array = {{{7, 0, 0,  0, 0, 0,  0, 8, 3},
-                                                    {0, 0, 0,  0, 7, 5,  0, 0, 2},
-                                                    {0, 0, 0,  0, 3, 0,  0, 6, 0},
+    constexpr std::array<std::array<uint8_t, 9>, 9> array = {{{7, 0, 0,  0, 0, 0,  0, 8, 3},
+                                                              {0, 0, 0,  0, 7, 5,  0, 0, 2},
+                                                              {0, 0, 0,  0, 3, 0,  0, 6, 0},
 
-                                                    {8, 0, 0,  0, 6, 0,  5, 4, 0},
-                                                    {0, 0, 0,  2, 0, 4,  0, 0, 0},
-                                                    {0, 4, 3,  0, 1, 0,  0, 0, 7},
+                                                              {8, 0, 0,  0, 6, 0,  5, 4, 0},
+                                                              {0, 0, 0,  2, 0, 4,  0, 0, 0},
+                                                              {0, 4, 3,  0, 1, 0,  0, 0, 7},
 
-                                                    {0, 1, 0,  0, 2, 0,  0, 0, 0},
-                                                    {2, 0, 0,  9, 8, 0,  0, 0, 0},
-                                                    {9, 7, 0,  0, 0, 0,  0, 0, 4}
-                                                   } };
+                                                              {0, 1, 0,  0, 2, 0,  0, 0, 0},
+                                                              {2, 0, 0,  9, 8, 0,  0, 0, 0},
+                                                              {9, 7, 0,  0, 0, 0,  0, 0, 4}
+                                                             } };
 
     auto sudokuBoard = CreateSudokuBoard(array);
 
