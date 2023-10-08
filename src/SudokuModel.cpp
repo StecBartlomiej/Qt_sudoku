@@ -15,7 +15,7 @@ QVariant SudokuModel::data(const QModelIndex &index, int role) const
 
     Cell cellValue = board_.Cell(index.row(), index.column());
 
-    if (role == Qt::DisplayRole || role == Qt::EditRole)
+    if (role == Qt::DisplayRole)
     {
         if (cellValue.HasValue())
             return cellValue.Value();
@@ -59,4 +59,13 @@ Qt::ItemFlags SudokuModel::flags(const QModelIndex &index) const
 bool SudokuModel::Solve()
 {
     return solver_(board_);
+}
+
+void SudokuModel::Reset()
+{
+    beginResetModel();
+
+    board_ = SudokuBoard{};
+
+    endResetModel();
 }
