@@ -4,7 +4,7 @@
 #include <QHeaderView>
 #include <QResizeEvent>
 #include <QMessageBox>
-#include <QFile>
+#include <QPainter>
 
 
 SudokuView::SudokuView(QWidget *parent) : QTableView(parent), sudokuModel_{new SudokuModel(parent)}, selectedNumber_{}
@@ -85,10 +85,6 @@ QString SudokuView::GetStringBoard() const
     return result;
 }
 
-void SudokuView::DrawGridLines()
-{
-
-}
 
 void SudokuView::SolveSudoku()
 {
@@ -103,4 +99,28 @@ void SudokuView::SolveSudoku()
     {
         QMessageBox::warning(this, tr("Solve"), tr("Unable to solve"));
     }
+}
+
+void SudokuView::paintEvent(QPaintEvent *event)
+{
+    QTableView::paintEvent(event);
+
+    QPainter painter{viewport()};
+
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(Qt::black));
+
+    int blockHeight = size().height() / 3;
+    int blockWidth = size().width() / 3;
+
+    QLine lineVertical1{blockWidth, 0, blockWidth, size().height()};
+    QLine lineVertical2{blockWidth * 2, 0, blockWidth * 2, size().height()};
+
+    QLine lineHorizontal1{0, blockHeight, size().width(), blockHeight};
+    QLine lineHorizontal2{0, blockHeight * 2, size().width(), blockHeight * 2};
+
+    painter.drawLine(lineVertical1);
+    painter.drawLine(lineVertical2);
+    painter.drawLine(lineHorizontal1);
+    painter.drawLine(lineHorizontal2);
 }

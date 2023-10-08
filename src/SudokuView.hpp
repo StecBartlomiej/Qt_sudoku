@@ -21,7 +21,7 @@ public slots:
     void SolveSudoku();
 
 private:
-    void DrawGridLines();
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     SudokuModel *sudokuModel_;

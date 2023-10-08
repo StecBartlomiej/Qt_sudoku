@@ -24,7 +24,6 @@ public slots:
     void SaveAs();
     void Open();
     void CopyToClipboard();
-    void ClearSudoku();
 
 private:
     static void SetupStyleSheet();

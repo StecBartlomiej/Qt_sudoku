@@ -16,7 +16,7 @@ MainWindow::MainWindow() : sudokuView_{new SudokuView(this)}, buttonGroup_{new Q
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    resize(1000, 800);
+    resize(800, 850);
     setWindowTitle(fileName_);
 
     SetupStyleSheet();
